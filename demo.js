@@ -1,3 +1,4 @@
 function myFunction(){
-    document.getElementById('para').innerHTML =  "Hello World!";
+    window.alert("Hello World!");
+    console.log("Daffodil International University");
 }
