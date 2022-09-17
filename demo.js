@@ -1,9 +1,12 @@
+let i = 0;
 function myFunction(){
-    window.alert("Hello World!");
-    console.log("Daffodil International University");
-
-    let a, b;
-    a = 10;
-    b = 20;
-    console.log(a+b);
+    if (i == 0){
+        document.getElementById('myImage').src='pic_bulbon.gif';
+        document.getElementById('myTurn').innerHTML = "Turn off";
+        i = 1;
+    }else{
+        i = 0;
+        document.getElementById('myImage').src='pic_bulboff.gif';
+        document.getElementById('myTurn').innerHTML = "Turn on";
+    }
 }
