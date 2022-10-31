@@ -4,6 +4,8 @@
     border: 3px solid rgb(99, 67, 67);
     width: 900px;
     margin: 30px auto;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .item {
@@ -11,4 +13,16 @@
     margin: 12px 3px;
     padding: 12px 3px;
     background: rgb(240, 194, 194);
+}
+
+#fruit {
+    width: 20%;
+}
+
+#computer {
+    width: 20%;
+}
+
+#stationary {
+    width: 20%;
 }
