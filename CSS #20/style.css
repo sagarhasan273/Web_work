@@ -1,4 +1,6 @@
 .container {
     border: 3px solid #0087f5;
     background-color: #03a9f4;
+    width: 500px;
+    height: 300px;
 }
