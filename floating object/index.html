@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+    <div class="floating-object"></div>
+
+    <script>
+        var floatingObject = document.querySelector(".floating-object");
+
+        function moveFloatingObject() {
+            var x = Math.floor(Math.random() * window.innerWidth);
+            var y = Math.floor(Math.random() * window.innerHeight);
+            floatingObject.style.left = x + "px";
+            floatingObject.style.top = y + "px";
+        }
+
+        floatingObject.addEventListener("mouseenter", function() {
+            moveFloatingObject();
+        });
+    </script>
+</body>
+
+</html>
