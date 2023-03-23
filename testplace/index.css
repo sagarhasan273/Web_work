@@ -1,0 +1,116 @@
+    * {
+        box-sizing: border-box;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+    
+    body {
+        background-color: #858585;
+        margin: 3px;
+    }
+    
+    .wrapper {
+        display: flex;
+    }
+    
+    div.sidebar {
+        width: 200px;
+        background-color: #ccc;
+        padding: 20px;
+        overflow-y: scroll;
+        height: 98vh;
+        margin: 5px;
+    }
+    
+    @media screen and (max-width: 1080px) {
+        div.sidebar {
+            display: none;
+        }
+    }
+    
+    .sidebar ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .sidebar li {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .sidebar a {
+        display: block;
+        padding: 5px;
+        color: #333;
+        text-decoration: none;
+        text-align: center;
+    }
+    
+    .sidebar a:hover {
+        background-color: #999;
+        color: #fff;
+    }
+    
+    .sidebar a.active {
+        background-color: #464545;
+        color: #ffffff;
+        font-size: medium;
+    }
+    
+    .container {
+        flex: 1;
+        padding: 20px;
+        height: 98vh;
+        background-color: #ccc;
+        margin: 5px;
+    }
+    
+    .horizontal-line {
+        border-bottom: 2px solid rgb(83, 83, 83);
+        border-radius: 2px;
+        padding: 0px;
+    }
+    
+    h3,
+    h4 {
+        text-align: center;
+        font-size: 22px;
+        margin: 1px;
+        padding-bottom: 2px;
+    }
+    
+    h2 {
+        text-align: center;
+        padding-top: 0px;
+        margin-top: 0px;
+    }
+    /* Div section active */
+    
+    .section {
+        display: none;
+    }
+    
+    .section.active {
+        display: block;
+    }
+    /* Scroll bar */
+    
+     ::-webkit-scrollbar {
+        width: 5px;
+    }
+    /* Track */
+    
+     ::-webkit-scrollbar-track {
+        background: #6e6e6e;
+    }
+    /* Handle */
+    
+     ::-webkit-scrollbar-thumb {
+        background: #443e3e;
+    }
+    /* Handle on hover */
+    
+     ::-webkit-scrollbar-thumb:hover {
+        background: #2c2b2b;
+    }

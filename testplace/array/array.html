@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Visualization</title>
+    <link rel="stylesheet" href="array.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="array">
+            <div class="element"></div>
+        </div>
+        <div class="controls">
+            <button onclick="add()">Add</button>
+            <button onclick="remove()">Remove</button>
+            <button onclick="clearAll()">Clear All</button>
+            <input type="number" placeholder="Value" id="value">
+            <input type="number" placeholder="Index" id="index">
+            <button onclick="insert()">Insert</button>
+            <button onclick="removeAt()">Remove At</button>
+            <input type="number" placeholder="Index" id="getValueIndex">
+            <button onclick="getValue()">Get Value</button>
+            <button onclick="view()">View</button>
+        </div>
+    </div>
+
+    <script src="array.js"></script>
+</body>
+
+</html>
