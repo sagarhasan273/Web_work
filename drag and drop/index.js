@@ -1,47 +1,39 @@
-const box = document.getElementById('box');
+// Get the box element
+var box = document.querySelector('.box');
 
-let isDragging = false;
-let currentX;
-let currentY;
-let initialX;
-let initialY;
-let xOffset = 0;
-let yOffset = 0;
+// Set the initial position of the box
+var pos1 = 0,
+    pos2 = 0,
+    pos3 = 0,
+    pos4 = 0;
+box.addEventListener('mousedown', dragMouseDown);
 
-box.addEventListener('mousedown', dragStart);
-box.addEventListener('mouseup', dragEnd);
-box.addEventListener('mousemove', drag);
-
-function dragStart(e) {
-    initialX = e.clientX - xOffset;
-    initialY = e.clientY - yOffset;
-
-    if (e.target === box) {
-        isDragging = true;
-    }
+function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.addEventListener('mouseup', closeDragElement);
+    // call a function whenever the cursor moves:
+    document.addEventListener('mousemove', elementDrag);
 }
 
-function dragEnd(e) {
-    initialX = currentX;
-    initialY = currentY;
-
-    isDragging = false;
+function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    box.style.top = (box.offsetTop - pos2) + "px";
+    box.style.left = (box.offsetLeft - pos1) + "px";
 }
 
-function drag(e) {
-    if (isDragging) {
-        e.preventDefault();
-
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
-
-        xOffset = currentX;
-        yOffset = currentY;
-
-        setTranslate(currentX, currentY, box);
-    }
-}
-
-function setTranslate(xPos, yPos, el) {
-    el.style.transform = `translate(${xPos}px, ${yPos}px)`;
+function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.removeEventListener('mouseup', closeDragElement);
+    document.removeEventListener('mousemove', elementDrag);
 }
