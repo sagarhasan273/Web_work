@@ -56,7 +56,7 @@ function updateArray() {
     for (let i = 0; i < array.length; i++) {
         const element = document.createElement('div');
         element.classList.add('element');
-        element.innerHTML = array[i];
+        element.innerHTML = "<p> " + i + " " + array[i] + "</p>";
         arrayElement.appendChild(element);
     }
 }

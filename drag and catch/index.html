@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Draggable Box</title>
+    <style>
+        .container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+            margin: 0 auto;
+        }
+        
+        .box {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            cursor: move;
+        }
+        
+        .box1 {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgb(148, 58, 58);
+            bottom: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box" id="box"></div>
+        <div class="box1" id="box1"></div>
+    </div>
+
+    <script src="index.js">
+        // JavaScript code goes here
+    </script>
+</body>
+
+</html>
