@@ -13,7 +13,7 @@
         display: flex;
     }
     
-    div.sidebar {
+    .sidebar {
         width: 200px;
         background-color: #ccc;
         padding: 20px;
@@ -21,12 +21,6 @@
         height: 98vh;
         margin: 5px;
         display: none;
-    }
-    
-    @media screen and (max-width: 1080px) {
-        div.sidebar {
-            display: none;
-        }
     }
     
     .sidebar ul {
@@ -86,6 +80,12 @@
         background-color: #464545;
         color: #ffffff;
         font-size: medium;
+    }
+    
+    @media screen and (max-width: 1080px) {
+        .sidebar {
+            display: none !important;
+        }
     }
     
     #homebtn {
@@ -182,7 +182,7 @@
         flex: 1;
         padding: 20px;
         height: 98vh;
-        background-color: #ccc;
+        background-color: #f1f1f1;
         margin: 5px;
         background-image: url('./homebackground.png');
         background-size: cover;
