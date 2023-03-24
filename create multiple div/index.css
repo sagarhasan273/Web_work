@@ -1,0 +1,16 @@
+.container {
+    position: relative;
+    display: flex;
+    width: 80%;
+    height: 98vh;
+    left: 100px;
+}
+
+.box {
+    /* position: absolute; */
+    float: left;
+    margin: auto;
+    width: 100px;
+    height: 70px;
+    background-color: aqua;
+}
