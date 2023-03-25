@@ -1,44 +1,47 @@
-function createDiv() {
-    var div = document.querySelector(".container");
-    const element = document.createElement('div');
-    element.classList.add('array');
-    div.appendChild(element);
-}
-
-
-// Get the box element
-var array = document.querySelector('.array');
-var box = document.querySelector('.boxes');
-console.log(array.offsetTop, array.offsetLeft, box.offsetTop, box.offsetLeft);
-// Set the initial position of the box
 var pos1 = 0,
     pos2 = 0,
-    pos3 = 0,
-    pos4 = 0;
-array.addEventListener('mousedown', dragMouseDown);
+    pos2 = 0,
+    pos3 = 0;
 
-function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.addEventListener('mouseup', closeDragElement);
-    // call a function whenever the cursor moves:
-    document.addEventListener('mousemove', elementDrag);
+var element = null;
+var div_create = null;
+
+function createDiv() {
+    var container = document.querySelector(".container");
+    element = document.createElement('div');
+    element.classList.add('box');
+    element.style.position = "absolute";
+    element.innerHTML = 5;
+    container.appendChild(element);
+    div_create = document.getElementById('create-div');
+    div_create.style.display = "none";
+    element.addEventListener("mousedown", dragMouseMove);
 }
 
-function elementDrag(e) {
+function dragMouseMove(e) {
     e = e || window.event;
     e.preventDefault();
-    // calculate the new cursor position:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    console.log(pos1, pos2);
+    document.addEventListener('mouseup', closeMouseElement);
+    document.addEventListener('mousemove', mouseMove);
+}
+
+function mouseMove(e) {
+    e = e || window.event;
+    e.preventDefault();
     pos1 = pos3 - e.clientX;
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
-    // set the element's new position:
-    array.style.top = (array.offsetTop - pos2) + "px";
-    array.style.left = (array.offsetLeft - pos1) + "px";
+    if (element == null) {
+        document.removeEventListener('mouseup', closeMouseElement);
+        document.removeEventListener('mousemove', mouseMove);
+        return;
+    }
+    element.style.top = (element.offsetTop - pos2) + "px";
+    element.style.left = (element.offsetLeft - pos1) + "px";
 }
 
 function distance(x1, y1, x2, y2) {
@@ -47,16 +50,28 @@ function distance(x1, y1, x2, y2) {
     return Math.sqrt(dx * dx + dy * dy);
 }
 
-// Example usage:
-// dist = 5
+var sloted = new Set();
 
-function closeDragElement() {
-    // const dist = distance(array.offsetTop, array.offsetLeft, box.offsetTop, box.offsetLeft);
-    // if (dist < 20) {
-    //     array.style.top = (box.offsetTop - pos2) + "px";
-    //     array.style.left = (box.offsetLeft - pos1) + "px";
-    // }
-    // stop moving when mouse button is released:
-    document.removeEventListener('mouseup', closeDragElement);
-    document.removeEventListener('mousemove', elementDrag);
+function closeMouseElement() {
+    var x = 5;
+    for (let i = 0; i < 10; i++) {
+        if (element == null) {
+            document.removeEventListener('mouseup', closeMouseElement);
+            document.removeEventListener('mousemove', mouseMove);
+            return;
+        }
+        var dist = distance((element.offsetTop - pos2), (element.offsetLeft - pos1), 31, x);
+        if (dist < 50 && !sloted.has(x)) {
+            element.style.top = "5" + "px";
+            element.style.left = x + "px";
+            sloted.add(x);
+            element = null;
+            div_create.style.display = "block";
+            break;
+        }
+        x += 60;
+    }
+
+    document.removeEventListener('mouseup', closeMouseElement);
+    document.removeEventListener('mousemove', mouseMove);
 }

@@ -3,23 +3,14 @@
     position: relative;
 }
 
-.box0,
-.box1,
-.box2,
-.box3,
-.box4,
-.box5,
-.box6,
-.box7,
-.box8,
-.box9 {
+.box {
     width: 50px;
     height: 50px;
     background-color: aqua;
     cursor: move;
-    position: absolute;
+    position: relative;
     /* top: 100px; */
-    padding: auto;
+    text-align: center;
 }
 
 .slots {
@@ -46,6 +37,8 @@
     margin: 5px;
 }
 
-button {
-    float: left;
+#create-div {
+    position: relative;
+    top: 50px;
+    left: 50px;
 }
