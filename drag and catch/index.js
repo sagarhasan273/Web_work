@@ -46,9 +46,6 @@ function distance(x1, y1, x2, y2) {
 function closeDragElement() {
     const dist = distance(box1.offsetTop, box1.offsetLeft, box.offsetTop, box.offsetLeft);
     if (dist < 100) {
-        box.style.top = "350";
-        box.style.left = "0";
-        console.log(dist, box.offsetTop, box.offsetLeft);
         box.style.top = (box1.offsetTop - pos2) + "px";
         box.style.left = (box1.offsetLeft - pos1) + "px";
     }
