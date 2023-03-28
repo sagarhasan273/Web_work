@@ -2,8 +2,10 @@ var pos1 = 0,
     pos2 = 0,
     pos2 = 0,
     pos3 = 0,
-    index = 0;
-
+    index = 0,
+    array_size = 0;
+const array = new Array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+console.log(array);
 var element = null;
 var div_create = null;
 
@@ -11,29 +13,42 @@ var slots = document.querySelector(".slots");
 var slots_pos = slots.getBoundingClientRect();
 const slots_arrayClass = new Array();;
 const slots_arrayPos = new Array();
+
 for (let i = 0; i < 15; i++) {
     let slt = ".slot" + i;
     slots_arrayClass.push(document.querySelector(slt));
     slots_arrayPos.push(slots_arrayClass[i].getBoundingClientRect());
 }
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+let randomNumber = getRandomInt(1, 10);
 
 function createDiv() {
     var container = document.querySelector(".slots");
+
+    var value = document.getElementById("value");
+    div_create = document.getElementById('create-div');
+    div_create.style.display = "none";
+
     element = document.createElement('div');
+    element_pos = element.getBoundingClientRect();
     element.classList.add('box');
     element.style.position = "absolute";
-    div_create = document.getElementById('create-div');
+
+    container.appendChild(element);
+
+    randomNumber = getRandomInt(1, 500);
+
     var p = document.createElement('p');
     p.classList.add("pera");
-    var value = document.getElementById("value");
-    p.innerHTML = value.value;
-    index += 1;
+    p.innerHTML = randomNumber;
     p.style.padding = "auto";
-    div_create.style.display = "none";
-    value.value = "";
-    element_pos = element.getBoundingClientRect();
-    container.appendChild(element);
+
     element.appendChild(p);
     element.addEventListener("mousedown", dragMouseMove);
 }
@@ -62,19 +77,28 @@ function slotsColorChange() {
     if (element == null) {
         return;
     }
-    var xs, ys;
+    var xs, ys, index, flag;
+
     for (let i = 0; i < 15; i++) {
         xs = slots_arrayPos[i].left - slots_pos.left;
         ys = slots_arrayPos[i].top - slots_pos.top;
-        if (distance(element.offsetLeft, element.offsetTop, xs, ys) < 25 && !sloted.has(i)) {
-            slots_arrayClass[i].style.color = "red";
-            slots_arrayClass[i].style.backgroundColor = "red";
-        } else if (!sloted.has(i)) {
+        if (distance(element.offsetLeft, element.offsetTop, xs, ys) < 25) {
+            index = i;
+        } else if (array_size <= i) {
             slots_arrayClass[i].style.color = "black";
             slots_arrayClass[i].style.backgroundColor = "black";
         }
     }
+
+    if (array_size <= index) {
+        slots_arrayClass[index].style.color = "red";
+        slots_arrayClass[index].style.backgroundColor = "red";
+    } else if (array_size > index) {
+        slots_arrayClass[array_size].style.color = "green";
+        slots_arrayClass[array_size].style.backgroundColor = "green";
+    }
 }
+
 
 function slotsSetOnChange() {
     if (element == null) {
@@ -89,7 +113,21 @@ function slotsSetOnChange() {
             element.style.left = xs + "px";
             sloted.add(i);
             div_create.style.display = "block";
+            element.style.zIndex = -1;
             element = null;
+
+            slots_arrayClass[i].style.color = "black";
+            slots_arrayClass[i].style.backgroundColor = "green";
+            p = document.createElement('p');
+            p.classList.add("value");
+            var value = document.getElementById("value");
+            value.value = randomNumber;
+            p.innerHTML = value.value;
+            array[i] = value.value;
+            slots_arrayClass[i].appendChild(p);
+
+            array_size += 1;
+            value.value = "";
             break;
         }
     }
