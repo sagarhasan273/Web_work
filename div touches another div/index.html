@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            margin: 10px;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box1" class="box"></div>
+    <div id="box2" class="box"></div>
+
+    <script>
+        const box1 = document.getElementById("box1");
+        const box2 = document.getElementById("box2");
+
+        // add event listener to listen for mouse move
+        document.addEventListener("mousemove", (e) => {
+            // get the bounding rectangles of the two boxes
+            const box1Rect = box1.getBoundingClientRect();
+            const box2Rect = box2.getBoundingClientRect();
+
+            // check if box1 is near box2
+            if (isNear(box1Rect, box2Rect)) {
+                // replace box2 with box1
+                box2.style.display = "none";
+                box1.style.display = "block";
+                box1.style.top = box2Rect.top + "px";
+                box1.style.left = box2Rect.left + "px";
+            }
+        });
+
+        // function to check if box1 is near box2
+        function isNear(rect1, rect2) {
+            const distance = Math.sqrt(
+                Math.pow(rect1.left - rect2.left, 2) + Math.pow(rect1.top - rect2.top, 2)
+            );
+            return distance < 50; // set the threshold for proximity
+        }
+    </script>
+</body>
+
+</html>
