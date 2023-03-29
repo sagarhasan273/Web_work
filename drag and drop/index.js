@@ -2,27 +2,68 @@ var pos1 = 0,
     pos2 = 0,
     pos2 = 0,
     pos3 = 0,
-    index = 0;
-
+    index = 0,
+    array_size = 0;
+const array = new Array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+console.log(array);
 var element = null;
 var div_create = null;
 
+var slots = document.querySelector(".slots");
+var slots_pos = slots.getBoundingClientRect();
+var value = document.getElementById("value");
+const slots_arrayClass = new Array();;
+const slots_arrayPos = new Array();
+
+for (let i = 0; i < 15; i++) {
+    let slt = ".slot" + i;
+    slots_arrayClass.push(document.querySelector(slt));
+    slots_arrayPos.push(slots_arrayClass[i].getBoundingClientRect());
+    var p = document.createElement('p');
+    p.classList.add("value");
+    slots_arrayClass[i].appendChild(p);
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+let randomNumber = getRandomInt(1, 10);
+
+function arrayContainerUpdate(update_array) {
+    for (let i = 0; i < update_array.length; i++) {
+        if (update_array[i] == null) {
+            break;
+        }
+        slots_arrayClass[i].style.color = "black";
+        slots_arrayClass[i].style.backgroundColor = "green";
+        var text = slots_arrayClass[i].querySelector(".value");
+        text.textContent = update_array[i];
+    }
+
+}
+
 function createDiv() {
-    var container = document.querySelector(".container");
+    var container = document.querySelector(".slots");
+    div_create = document.getElementById('create-div');
+    div_create.style.display = "none";
+
     element = document.createElement('div');
+    element_pos = element.getBoundingClientRect();
     element.classList.add('box');
     element.style.position = "absolute";
-    div_create = document.getElementById('create-div');
-    var p = document.createElement('p');
-    p.classList.add("pera");
-    var value = document.getElementById("value");
-    p.innerHTML = index + "<br>" + value.value;
-    index += 1;
-    p.style.padding = "auto";
-    div_create.style.display = "none";
-    value.value = "";
 
     container.appendChild(element);
+
+    randomNumber = getRandomInt(1, 500);
+    value.value = randomNumber;
+    var p = document.createElement('p');
+    p.classList.add("pera");
+    p.innerHTML = randomNumber;
+    p.style.padding = "auto";
+
     element.appendChild(p);
     element.addEventListener("mousedown", dragMouseMove);
 }
@@ -32,25 +73,9 @@ function dragMouseMove(e) {
     e.preventDefault();
     pos3 = e.clientX;
     pos4 = e.clientY;
-    console.log(pos1, pos2);
+
     document.addEventListener('mouseup', closeMouseElement);
     document.addEventListener('mousemove', mouseMove);
-}
-
-function mouseMove(e) {
-    e = e || window.event;
-    e.preventDefault();
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    if (element == null) {
-        document.removeEventListener('mouseup', closeMouseElement);
-        document.removeEventListener('mousemove', mouseMove);
-        return;
-    }
-    element.style.top = (element.offsetTop - pos2) + "px";
-    element.style.left = (element.offsetLeft - pos1) + "px";
 }
 
 function distance(x1, y1, x2, y2) {
@@ -61,26 +86,82 @@ function distance(x1, y1, x2, y2) {
 
 var sloted = new Set();
 
-function closeMouseElement() {
-    var x = 5;
-    for (let i = 0; i < 10; i++) {
-        if (element == null) {
-            document.removeEventListener('mouseup', closeMouseElement);
-            document.removeEventListener('mousemove', mouseMove);
-            return;
+function slotsColorChange() {
+    if (element == null) {
+        return;
+    }
+    var xs, ys, index, flag;
+    const newArray = new Array();
+    for (let i = 0; i < array_size; i++) {
+        newArray.push(array[i]);
+    }
+    for (let i = 0; i < array_size + 1; i++) {
+        xs = slots_arrayPos[i].left - slots_pos.left;
+        ys = slots_arrayPos[i].top - slots_pos.top;
+        if (distance(element.offsetLeft, element.offsetTop, xs, ys) < 25) {
+            index = i;
+        } else if (array_size <= i) {
+            slots_arrayClass[i].style.color = "black";
+            slots_arrayClass[i].style.backgroundColor = "black";
         }
-        var dist = distance((element.offsetTop - pos2), (element.offsetLeft - pos1), 31, x);
-        if (dist < 50 && !sloted.has(x)) {
-            element.style.top = "5" + "px";
-            element.style.left = x + "px";
-            sloted.add(x);
+    }
+
+    if (array_size <= index) {
+        slots_arrayClass[index].style.color = "red";
+        slots_arrayClass[index].style.backgroundColor = "red";
+    } else if (array_size > index) {
+        slots_arrayClass[array_size].style.color = "black";
+        slots_arrayClass[array_size].style.backgroundColor = "green";
+
+        newArray.splice(index, 0, value.value);
+    }
+    arrayContainerUpdate(newArray);
+}
+
+
+function slotsSetOnChange() {
+    if (element == null) {
+        return;
+    }
+    var xs, ys;
+    for (let i = 0; i < 15; i++) {
+        xs = slots_arrayPos[i].left - slots_pos.left;
+        ys = slots_arrayPos[i].top - slots_pos.top;
+        if (distance(element.offsetLeft, element.offsetTop, xs, ys) < 25 && !sloted.has(i)) {
+            element.style.top = "27.5" + "px";
+            element.style.left = xs + "px";
+            element.style.zIndex = -1;
             element = null;
+            sloted.add(i);
+            array[i] = value.value;
+            array_size += 1;
+            arrayContainerUpdate(array);
+            // value.value = "";
+
             div_create.style.display = "block";
             break;
         }
-        x += 60;
     }
+}
 
+function mouseMove(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    slotsColorChange();
+    if (element == null) {
+        return;
+    }
+    element.style.top = (element.offsetTop - pos2) + "px";
+    element.style.left = (element.offsetLeft - pos1) + "px";
+}
+
+
+function closeMouseElement() {
+    slotsSetOnChange();
     document.removeEventListener('mouseup', closeMouseElement);
     document.removeEventListener('mousemove', mouseMove);
 }

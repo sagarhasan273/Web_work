@@ -5,12 +5,12 @@ var pos1 = 0,
     index = 0,
     array_size = 0;
 const array = new Array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-console.log(array);
 var element = null;
 var div_create = null;
 
 var slots = document.querySelector(".slots");
 var slots_pos = slots.getBoundingClientRect();
+var value = document.getElementById("value");
 const slots_arrayClass = new Array();;
 const slots_arrayPos = new Array();
 
@@ -18,6 +18,9 @@ for (let i = 0; i < 15; i++) {
     let slt = ".slot" + i;
     slots_arrayClass.push(document.querySelector(slt));
     slots_arrayPos.push(slots_arrayClass[i].getBoundingClientRect());
+    var p = document.createElement('p');
+    p.classList.add("value");
+    slots_arrayClass[i].appendChild(p);
 }
 
 function getRandomInt(min, max) {
@@ -28,10 +31,21 @@ function getRandomInt(min, max) {
 
 let randomNumber = getRandomInt(1, 10);
 
+function arrayContainerUpdate(update_array) {
+    for (let i = 0; i < update_array.length; i++) {
+        if (update_array[i] == null) {
+            break;
+        }
+        slots_arrayClass[i].style.color = "black";
+        slots_arrayClass[i].style.backgroundColor = "green";
+        var text = slots_arrayClass[i].querySelector(".value");
+        text.textContent = update_array[i];
+    }
+
+}
+
 function createDiv() {
     var container = document.querySelector(".slots");
-
-    var value = document.getElementById("value");
     div_create = document.getElementById('create-div');
     div_create.style.display = "none";
 
@@ -43,10 +57,12 @@ function createDiv() {
     container.appendChild(element);
 
     randomNumber = getRandomInt(1, 500);
-
+    if (value.value == "") {
+        value.value = randomNumber;
+    }
     var p = document.createElement('p');
     p.classList.add("pera");
-    p.innerHTML = randomNumber;
+    p.innerHTML = value.value;
     p.style.padding = "auto";
 
     element.appendChild(p);
@@ -58,8 +74,6 @@ function dragMouseMove(e) {
     e.preventDefault();
     pos3 = e.clientX;
     pos4 = e.clientY;
-
-    slotsColorChange();
 
     document.addEventListener('mouseup', closeMouseElement);
     document.addEventListener('mousemove', mouseMove);
@@ -78,8 +92,11 @@ function slotsColorChange() {
         return;
     }
     var xs, ys, index, flag;
-
-    for (let i = 0; i < 15; i++) {
+    const newArray = new Array();
+    for (let i = 0; i < array_size; i++) {
+        newArray.push(array[i]);
+    }
+    for (let i = 0; i < array_size + 1; i++) {
         xs = slots_arrayPos[i].left - slots_pos.left;
         ys = slots_arrayPos[i].top - slots_pos.top;
         if (distance(element.offsetLeft, element.offsetTop, xs, ys) < 25) {
@@ -94,9 +111,12 @@ function slotsColorChange() {
         slots_arrayClass[index].style.color = "red";
         slots_arrayClass[index].style.backgroundColor = "red";
     } else if (array_size > index) {
-        slots_arrayClass[array_size].style.color = "green";
+        slots_arrayClass[array_size].style.color = "black";
         slots_arrayClass[array_size].style.backgroundColor = "green";
+
+        newArray.splice(index, 0, value.value);
     }
+    arrayContainerUpdate(newArray);
 }
 
 
@@ -108,26 +128,26 @@ function slotsSetOnChange() {
     for (let i = 0; i < 15; i++) {
         xs = slots_arrayPos[i].left - slots_pos.left;
         ys = slots_arrayPos[i].top - slots_pos.top;
-        if (distance(element.offsetLeft, element.offsetTop, xs, ys) < 25 && !sloted.has(i)) {
+        if (distance(element.offsetLeft, element.offsetTop, xs, ys) < 25) {
             element.style.top = "27.5" + "px";
             element.style.left = xs + "px";
-            sloted.add(i);
-            div_create.style.display = "block";
             element.style.zIndex = -1;
             element = null;
 
-            slots_arrayClass[i].style.color = "black";
-            slots_arrayClass[i].style.backgroundColor = "green";
-            p = document.createElement('p');
-            p.classList.add("value");
-            var value = document.getElementById("value");
-            value.value = randomNumber;
-            p.innerHTML = value.value;
-            array[i] = value.value;
-            slots_arrayClass[i].appendChild(p);
+            const newArray = new Array();
+            for (let i = 0; i < array_size; i++) {
+                newArray.push(array[i]);
+            }
+            newArray.splice(i, 0, value.value);
 
             array_size += 1;
+            for (let i = 0; i < array_size; i++) {
+                array[i] = newArray[i];
+            }
+            arrayContainerUpdate(array);
             value.value = "";
+
+            div_create.style.display = "block";
             break;
         }
     }

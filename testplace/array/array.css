@@ -1,34 +1,90 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.container_array {
+    /* display: flex; */
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: 500px;
+    background-color: aqua;
+    overflow-x: scroll;
 }
 
-.array {
-    display: flex;
-    flex-direction: row;
-    margin: 20px;
+.box {
+    width: 45px;
+    height: 45px;
+    background-color: rgb(0, 255, 85);
+    cursor: move;
+    position: absolute;
+    top: 200px;
+    left: 377.5px;
+    text-align: center;
+    margin: auto;
+    border-radius: 5px;
 }
 
-.element {
-    width: 50px;
-    height: 50px;
-    background-color: #ddd;
-    border: 1px solid black;
+.slots {
+    position: relative;
+    top: 100px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
+    width: 800px;
+    height: 100px;
+    background-color: antiquewhite;
+    margin: auto;
 }
 
-.controls {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
+.slot0,
+.slot1,
+.slot2,
+.slot3,
+.slot4,
+.slot5,
+.slot6,
+.slot7,
+.slot8,
+.slot9,
+.slot10,
+.slot11,
+.slot12,
+.slot13,
+.slot14 {
+    float: left;
+    width: 45px;
+    height: 45px;
+    background-color: rgb(0, 0, 0);
+    margin: auto;
+    border-radius: 5px;
+    position: relative;
 }
 
-.controls input {
-    margin-right: 10px;
+#index0,
+#index1,
+#index2,
+#index3,
+#index4,
+#index5,
+#index6,
+#index7,
+#index8,
+#index9,
+#index10,
+#index11,
+#index12,
+#index13,
+#index14 {
+    position: relative;
+    top: -25px;
+    margin: auto;
+    text-align: center;
+}
+
+.value {
+    position: relative;
+    top: -4px;
+    margin: auto;
+    text-align: center;
+}
+
+#create-div {
+    position: relative;
+    top: 150px;
+    left: 50px;
 }
