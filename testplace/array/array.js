@@ -1,28 +1,54 @@
+var doc = null;
 var pos1 = 0,
     pos2 = 0,
     pos2 = 0,
     pos3 = 0,
     index = 0,
     array_size = 0;
-const array = new Array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
 var element = null;
 var div_create = null;
+var slots = null;
+var slots_pos = null;
+var value = null;
+var array = null;
 
-var slots = document.querySelector(".slots");
-var slots_pos = slots.getBoundingClientRect();
 
-var value = document.getElementById("value");
-const slots_arrayClass = new Array();;
-const slots_arrayPos = new Array();
+var slots_arrayClass = null;
+var slots_arrayPos = null;
+slots_arrayClass = new Array();
+slots_arrayPos = new Array();
+array = new Array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-for (let i = 0; i < 15; i++) {
-    let slt = ".slot" + i;
-    slots_arrayClass.push(document.querySelector(slt));
-    slots_arrayPos.push(slots_arrayClass[i].getBoundingClientRect());
-    var p = document.createElement('p');
-    p.classList.add("value");
-    slots_arrayClass[i].appendChild(p);
-}
+fetch('./array/array.html')
+    .then(response => response.text())
+    .then(html => {
+        const parser = new DOMParser();
+        doc = parser.parseFromString(html, 'text/html');
+        const div = doc.querySelector('.container_array');
+
+        const div1 = doc.querySelector('.footer_btns');
+
+        const targetDiv = document.querySelector('#array-section');
+
+        targetDiv.appendChild(div);
+        targetDiv.appendChild(div1);
+
+
+        slots = document.querySelector(".slots");
+        slots_pos = slots.getBoundingClientRect();
+        console.log(slots_pos);
+        for (let i = 0; i < 15; i++) {
+            let slt = ".slot" + i;
+            slots_arrayClass.push(document.querySelector(slt));
+            slots_arrayPos.push(slots_arrayClass[i].getBoundingClientRect());
+            var p = document.createElement('p');
+            p.classList.add("value");
+            slots_arrayClass[i].appendChild(p);
+        }
+
+    });
+
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -48,7 +74,7 @@ function arrayContainerUpdate(update_array) {
 function createDiv() {
 
     div_create = document.getElementById('create-div');
-    div_create.style.display = "none";
+    // div_create.style.display = "none";
 
     element = document.createElement('div');
     element_pos = element.getBoundingClientRect();
@@ -56,7 +82,7 @@ function createDiv() {
     element.style.position = "absolute";
 
     slots.appendChild(element);
-
+    value = document.getElementById("value");
     randomNumber = getRandomInt(1, 500);
     if (value.value == "") {
         value.value = randomNumber;
@@ -149,7 +175,7 @@ function slotsSetOnChange() {
             arrayContainerUpdate(array);
             value.value = "";
 
-            div_create.style.display = "block";
+            // div_create.style.display = "block";
             break;
         }
     }

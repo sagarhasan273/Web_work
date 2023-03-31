@@ -1,5 +1,4 @@
 .container_array {
-    /* display: flex; */
     position: relative;
     margin: auto;
     width: 100%;
@@ -19,6 +18,12 @@
     text-align: center;
     margin: auto;
     border-radius: 5px;
+}
+
+.value {
+    position: relative;
+    text-align: center;
+    top: -20px;
 }
 
 .slots {
@@ -76,15 +81,11 @@
     text-align: center;
 }
 
-.value {
+#footer_btns {
     position: relative;
-    top: -4px;
-    margin: auto;
-    text-align: center;
+    border: 1px solid black;
 }
 
 #create-div {
-    position: relative;
-    top: 150px;
-    left: 50px;
+    position: absolute;
 }
