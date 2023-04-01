@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slots {
+            display: flex;
+            justify-content: center;
+            background-color: aqua;
+            width: 900px;
+            height: 200px;
+        }
+        
+        .slot {
+            width: 45px;
+            height: 45px;
+            margin: 5px;
+            background-color: #807171;
+            border-radius: 5px;
+            opacity: 0.5;
+            transition: transform .5s ease-in-out;
+            box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        .slot0 {
+            animation: box-appear .2s 0s forwards;
+            animation: box-disappear .4s 0.25s forwards;
+            transform: scale(1.15);
+        }
+        
+        .slot1 {
+            animation: box-appear .2s 0.05s forwards;
+            animation: box-disappear .4s 0.30s forwards;
+            transform: scale(1.15);
+        }
+        
+        .slot2 {
+            animation: box-appear .2s 0.10s forwards;
+            animation: box-disappear .4s 0.35s forwards;
+            transform: scale(1.15);
+        }
+        
+        .slot2:hover {
+            transform: scale(1.25);
+        }
+        
+        .slot3 {
+            animation: box-appear .2s 0.15s forwards;
+            animation: box-disappear .4s 0.40s forwards;
+            transform: scale(1.15);
+        }
+        
+        .slot4 {
+            animation: box-appear .2s 0.20s forwards;
+            animation: box-disappear .4s 0.45s forwards;
+            transform: scale(1.15);
+        }
+        
+        @keyframes box-appear {
+            0% {
+                opacity: .2;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes box-disappear {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .2;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="slots" id="slots">
+        <div class="slot"></div>
+        <div class="slot"></div>
+        <div class="slot"></div>
+        <div class="slot"></div>
+        <div class="slot"></div>
+    </div>
+    <button id="clickMe">ClickMe</button>
+    <script>
+        var slots = document.querySelector(".slots");
+        var test = document.querySelector(".slot");
+        slots.addEventListener("click", function() {
+            var index = 1;
+            var slot = document.querySelectorAll(".slot");
+
+            for (let i = index; i < 5; i++) {
+                console.log(slot[i].classList);
+                if (!slot[i].classList.contains("slot" + i)) {
+                    slot[i].classList.add("slot" + i);
+                }
+                slot[i].addEventListener("animationend", function() {
+                    slot[i].classList.remove("slot" + i);
+                }, {
+                    once: false
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

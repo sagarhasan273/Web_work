@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container_array {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .slots {
+            transform-origin: center center;
+            transition: transform 0.5s;
+        }
+        
+        .container_array.zoom-in .slots {
+            transform: scale(1.2);
+        }
+        
+        .container_array.zoom-out .slots {
+            transform: scale(0.8);
+        }
+        
+        .box {
+            background-color: aqua;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <script>
+        const container = document.querySelector('.container');
+
+        container.addEventListener('wheel', function(event) {
+            if (event.deltaY < 0) {
+                // Zoom in
+                container.classList.add('zoom-in');
+                container.classList.remove('zoom-out');
+            } else {
+                // Zoom out
+                container.classList.add('zoom-out');
+                container.classList.remove('zoom-in');
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="box"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
