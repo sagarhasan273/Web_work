@@ -2,8 +2,7 @@
     position: relative;
     margin: auto;
     width: 100%;
-    height: 500px;
-    /* background-color: aqua; */
+    height: 400px;
     overflow-x: scroll;
 }
 
@@ -190,9 +189,8 @@
     text-align: center;
 }
 
-#footer_btns {
+.footer_array {
     position: relative;
-    border: 1px solid black;
     display: flex;
 }
 
@@ -204,4 +202,27 @@
 #reset {
     position: relative;
     float: left;
+}
+
+.key_section_array {
+    position: relative;
+    float: left;
+    width: 48%;
+    background-color: antiquewhite;
+    margin: auto;
+}
+
+.output_section_array {
+    position: relative;
+    float: left;
+    width: 48%;
+    background-color: aquamarine;
+    margin: auto;
+}
+
+.output_code_array {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    font-size: 35px;
 }
