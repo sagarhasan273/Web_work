@@ -87,5 +87,9 @@
 }
 
 #create-div {
-    position: absolute;
+    position: relative;
+}
+
+#reset {
+    position: relative;
 }
