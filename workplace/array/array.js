@@ -138,7 +138,6 @@ function arrayContainerUpdate(update_array) {
 
 }
 
-
 function dragMouseMove(e) {
     e = e || window.event;
     e.preventDefault();
@@ -155,6 +154,15 @@ function distance(x1, y1, x2, y2) {
     return Math.sqrt(dx * dx + dy * dy);
 }
 
+function transformScaleSlot(index) {
+    for (let i = 0; i < slots_arrayClass.length; i++) {
+        if (i == index) {
+            slots_arrayClass[i].style.transform = "scale(1.13)";
+        } else {
+            slots_arrayClass[i].style.transform = "scale(1.0)";
+        }
+    }
+}
 var sloted = new Set();
 
 function slotsColorChange() {
@@ -166,6 +174,7 @@ function slotsColorChange() {
     for (let i = 0; i < array_size; i++) {
         newArray.push(array[i]);
     }
+    const output = document.querySelector(".output_code_array");
     for (let i = 0; i < array_size + 1; i++) {
         xs = slots_arrayPos[i].left - slots_pos.left;
         ys = slots_arrayPos[i].top - slots_pos.top;
@@ -175,21 +184,25 @@ function slotsColorChange() {
         } else if (array_size <= i) {
             slots_arrayClass[i].style.color = "black";
             slots_arrayClass[i].style.backgroundColor = "black";
+            output.innerHTML = "";
         }
     }
-
     if (array_size <= index) {
+        var text = slots_arrayClass[index].querySelector(".value");
         slots_arrayClass[index].style.color = "red";
         slots_arrayClass[index].style.backgroundColor = "red";
+        output.innerHTML = "array.append(" + value.value + ")";
+        text.textContent = value.value;
+        text.style.color = "black";
     } else if (array_size > index) {
         slots_arrayClass[array_size].style.color = "black";
         slots_arrayClass[array_size].style.backgroundColor = "black";
-
+        output.innerHTML = "array.insert(" + index + ", " + value.value + ")";
         newArray.splice(index, 0, value.value);
     }
     arrayContainerUpdate(newArray);
+    transformScaleSlot(index);
 }
-
 
 function slotsSetOnChange() {
     if (element == null) {
@@ -218,6 +231,7 @@ function slotsSetOnChange() {
                 array[i] = newArray[i];
             }
             arrayContainerUpdate(array);
+            transformScaleSlot(array_size + 1);
             value.value = "";
 
             div_create.style.display = "block";
