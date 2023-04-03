@@ -2,6 +2,7 @@ body {
     background-color: #858585;
     margin: 3px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .wrapper {
@@ -11,10 +12,10 @@ body {
 .sidebar {
     width: 200px;
     height: 98vh;
+    margin: 5px;
     background-color: #ccc;
     padding: 20px;
     overflow-y: scroll;
-    margin: 5px;
     display: none;
     box-sizing: border-box;
     border-radius: 5px;

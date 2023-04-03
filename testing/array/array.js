@@ -33,6 +33,7 @@ function reset() {
     for (let i = 0; i < 15; i++) {
         let slt = "slot" + i;
         if (allslots[i].classList.contains(slt)) {
+            document.querySelector("." + slt).style.backgroundColor = "black";
             allslots[i].querySelector(".value").remove();
             allslots[i].classList.remove(slt);
         }
@@ -131,7 +132,7 @@ function arrayContainerUpdate(update_array) {
             continue;
         }
         slots_arrayClass[i].style.color = "black";
-        slots_arrayClass[i].style.backgroundColor = "green";
+        slots_arrayClass[i].style.backgroundColor = "#ffd400";
         var text = slots_arrayClass[i].querySelector(".value");
         text.textContent = update_array[i];
     }
@@ -158,6 +159,8 @@ function transformScaleSlot(index) {
     for (let i = 0; i < slots_arrayClass.length; i++) {
         if (i == index) {
             slots_arrayClass[i].style.transform = "scale(1.13)";
+            slots_arrayClass[i].style.color = "rgb(255 129 0)";
+            slots_arrayClass[i].style.backgroundColor = "rgb(255 129 0)";
         } else {
             slots_arrayClass[i].style.transform = "scale(1.0)";
         }
@@ -189,8 +192,8 @@ function slotsColorChange() {
     }
     if (array_size <= index) {
         var text = slots_arrayClass[index].querySelector(".value");
-        slots_arrayClass[index].style.color = "red";
-        slots_arrayClass[index].style.backgroundColor = "red";
+        slots_arrayClass[index].style.color = "rgb(255 129 0)";
+        slots_arrayClass[index].style.backgroundColor = "rgb(255 129 0)";
         output.innerHTML = "array.append(" + value.value + ")";
         text.textContent = value.value;
         text.style.color = "black";
@@ -233,8 +236,8 @@ function slotsSetOnChange() {
             arrayContainerUpdate(array);
             transformScaleSlot(array_size + 1);
             value.value = "";
-
-            div_create.style.display = "block";
+            if (array.length < 15)
+                div_create.style.display = "block";
             break;
         }
     }
@@ -251,6 +254,14 @@ function mouseMove(e) {
     if (element == null) {
         return;
     }
+
+    // const container_array = document.querySelector("#container_array");
+    // const box_ = document.querySelector(".box");
+    // const container_array_pos = container_array.getBoundingClientRect();
+    // const box_pos = box_.getBoundingClientRect();
+    // if (container_array_pos.left < box_pos.left && box_pos.left < ((container_array_pos.width + container_array_pos.left) - 45) && container_array_pos.top < box_pos.top && box_pos.top < ((container_array_pos.height + container_array_pos.top) - 45)) {
+    //     console.log("YES");
+    // }
     element.style.top = (element.offsetTop - pos2) + "px";
     element.style.left = (element.offsetLeft - pos1) + "px";
 }
