@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 500px;
+            height: 500px;
+            background-color: lightblue;
+            position: relative;
+        }
+        
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box"></div>
+    </div>
+
+    <script>
+        const container = document.querySelector('.container');
+        const box = document.querySelector('.box');
+        let isDragging = false;
+        let previousX;
+        let previousY;
+
+        container.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            previousX = e.clientX;
+            previousY = e.clientY;
+        });
+
+        container.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+
+            const boxRect = box.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            const boxX = boxRect.left - containerRect.left;
+            const boxY = boxRect.top - containerRect.top;
+
+            const deltaX = e.clientX - previousX;
+            const deltaY = e.clientY - previousY;
+
+            const newX = Math.min(Math.max(boxX + deltaX, 0), containerRect.width - boxRect.width);
+            const newY = Math.min(Math.max(boxY + deltaY, 0), containerRect.height - boxRect.height);
+
+            box.style.left = `${newX}px`;
+            box.style.top = `${newY}px`;
+
+            previousX = e.clientX;
+            previousY = e.clientY;
+        });
+
+        container.addEventListener('mouseup', function(e) {
+            isDragging = false;
+        });
+    </script>
+</body>
+
+</html>

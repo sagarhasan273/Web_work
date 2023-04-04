@@ -5,15 +5,12 @@ var pos1 = 0,
     pos3 = 0,
     index = 0,
     array_size = 0;
-
 var element = null;
 var div_create = null;
 var slots = null;
 var slots_pos = null;
 var value = null;
 var array = null;
-
-
 var slots_arrayClass = null;
 var slots_arrayPos = null;
 slots_arrayClass = new Array();
@@ -33,6 +30,7 @@ function reset() {
     for (let i = 0; i < 15; i++) {
         let slt = "slot" + i;
         if (allslots[i].classList.contains(slt)) {
+            document.querySelector("." + slt).style.backgroundColor = "black";
             allslots[i].querySelector(".value").remove();
             allslots[i].classList.remove(slt);
         }
@@ -49,8 +47,6 @@ function reset() {
     slots_arrayPos = new Array();
     arrayContainerUpdate(array);
 }
-
-
 
 fetch('./array/array.html')
     .then(response => response.text())
@@ -89,7 +85,6 @@ function createDiv() {
     var p = document.createElement('p');
     p.classList.add("value");
     slots_arrayClass[i].appendChild(p);
-
 
     slots.appendChild(element);
     value = document.getElementById("value");
@@ -131,7 +126,7 @@ function arrayContainerUpdate(update_array) {
             continue;
         }
         slots_arrayClass[i].style.color = "black";
-        slots_arrayClass[i].style.backgroundColor = "green";
+        slots_arrayClass[i].style.backgroundColor = "#ffd400";
         var text = slots_arrayClass[i].querySelector(".value");
         text.textContent = update_array[i];
     }
@@ -158,6 +153,8 @@ function transformScaleSlot(index) {
     for (let i = 0; i < slots_arrayClass.length; i++) {
         if (i == index) {
             slots_arrayClass[i].style.transform = "scale(1.13)";
+            slots_arrayClass[i].style.color = "rgb(255 129 0)";
+            slots_arrayClass[i].style.backgroundColor = "rgb(255 129 0)";
         } else {
             slots_arrayClass[i].style.transform = "scale(1.0)";
         }
@@ -189,8 +186,8 @@ function slotsColorChange() {
     }
     if (array_size <= index) {
         var text = slots_arrayClass[index].querySelector(".value");
-        slots_arrayClass[index].style.color = "red";
-        slots_arrayClass[index].style.backgroundColor = "red";
+        slots_arrayClass[index].style.color = "rgb(255 129 0)";
+        slots_arrayClass[index].style.backgroundColor = "rgb(255 129 0)";
         output.innerHTML = "array.append(" + value.value + ")";
         text.textContent = value.value;
         text.style.color = "black";
@@ -218,6 +215,7 @@ function slotsSetOnChange() {
             element.style.top = "27.5" + "px";
             element.style.left = xs + "px";
             element.style.display = "none";
+            element.remove();
             element = null;
 
             const newArray = new Array();
@@ -233,8 +231,8 @@ function slotsSetOnChange() {
             arrayContainerUpdate(array);
             transformScaleSlot(array_size + 1);
             value.value = "";
-
-            div_create.style.display = "block";
+            if (array.length < 15)
+                div_create.style.display = "block";
             break;
         }
     }
@@ -243,20 +241,40 @@ function slotsSetOnChange() {
 function mouseMove(e) {
     e = e || window.event;
     e.preventDefault();
+    if (element == null) {
+        return;
+    }
     pos1 = pos3 - e.clientX;
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
     slotsColorChange();
-    if (element == null) {
-        return;
+
+    const container_array = document.querySelector("#container_array");
+    const box_ = document.querySelector(".box");
+    const container_array_pos = container_array.getBoundingClientRect();
+    const box_pos = box_.getBoundingClientRect();
+    const x_max_min_move = container_array_pos.left < Math.ceil(box_pos.left) && Math.ceil(box_pos.left) < ((container_array_pos.width + container_array_pos.left) - 45);
+    const y_max_min_move = container_array_pos.top < Math.ceil(box_pos.top) && Math.ceil(box_pos.top) < ((container_array_pos.height + container_array_pos.top) - 45);
+    if ((x_max_min_move && y_max_min_move)) {
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
     }
-    element.style.top = (element.offsetTop - pos2) + "px";
-    element.style.left = (element.offsetLeft - pos1) + "px";
 }
 
 
 function closeMouseElement() {
+    const container_array = document.querySelector("#container_array");
+    const box_ = document.querySelector(".box");
+    const container_array_pos = container_array.getBoundingClientRect();
+    const box_pos = box_.getBoundingClientRect();
+    const x_max_min_move = container_array_pos.left < Math.ceil(box_pos.left) && Math.ceil(box_pos.left) < ((container_array_pos.width + container_array_pos.left) - 45);
+    const y_max_min_move = container_array_pos.top < Math.ceil(box_pos.top) && Math.ceil(box_pos.top) < ((container_array_pos.height + container_array_pos.top) - 45);
+    if (!(x_max_min_move && y_max_min_move)) {
+        console.log(x_max_min_move, y_max_min_move);
+        element.style.top = "125px";
+        element.style.left = "377.5px";
+    }
     slotsSetOnChange();
     document.removeEventListener('mouseup', closeMouseElement);
     document.removeEventListener('mousemove', mouseMove);
