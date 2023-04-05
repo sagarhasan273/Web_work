@@ -1,4 +1,3 @@
-var doc = null;
 var pos1 = 0,
     pos2 = 0,
     pos2 = 0,
@@ -9,23 +8,42 @@ var element = null;
 var div_create = null;
 var slots = null;
 var slots_pos = null;
-var value = null;
+var value_array = null;
 var array = null;
 var slots_arrayClass = null;
 var slots_arrayPos = null;
 slots_arrayClass = new Array();
 slots_arrayPos = new Array();
 array = new Array();
+var sloted = new Set();
+var randomNumber = getRandomInt(1, 10);
+
+fetch('./array/array.html')
+    .then(response => response.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const div = doc.querySelector('.container_array');
+
+        const div1 = doc.querySelector('.footer_array');
+
+        const targetDiv = document.querySelector('#array-section');
+
+        targetDiv.appendChild(div);
+        targetDiv.appendChild(div1);
+
+        slots = document.querySelector(".slots");
+        slots_pos = slots.getBoundingClientRect();
+    });
 
 function reset() {
-    doc = null;
     pos1 = 0;
     pos2 = 0;
     pos2 = 0;
     pos3 = 0;
     index = 0;
     array_size = 0;
-    value = null;
+    value_array = null;
     const allslots = document.querySelectorAll(".slot");
     for (let i = 0; i < 15; i++) {
         let slt = "slot" + i;
@@ -46,29 +64,26 @@ function reset() {
     slots_arrayClass = new Array();
     slots_arrayPos = new Array();
     arrayContainerUpdate(array);
+
+    var array_string = "[";
+    for (let i = 0; i < array_size; i++) {
+        if (i + 1 != array_size)
+            array_string += array[i] + ", ";
+        else
+            array_string += array[i]
+    }
+    array_string += "]";
+    var python_code =
+        `array = ${array_string}
+
+print(array) # print array
+`
+    codeOutput(python_code);
 }
 
-fetch('./array/array.html')
-    .then(response => response.text())
-    .then(html => {
-        const parser = new DOMParser();
-        doc = parser.parseFromString(html, 'text/html');
-        const div = doc.querySelector('.container_array');
-
-        const div1 = doc.querySelector('.footer_array');
-
-        const targetDiv = document.querySelector('#array-section');
-
-        targetDiv.appendChild(div);
-        targetDiv.appendChild(div1);
-
-
-        slots = document.querySelector(".slots");
-        slots_pos = slots.getBoundingClientRect();
-    });
 
 function createDiv() {
-    div_create = document.getElementById('create-div');
+    div_create = document.getElementById('create-box-array');
     div_create.style.display = "none";
 
     element = document.createElement('div');
@@ -87,19 +102,34 @@ function createDiv() {
     slots_arrayClass[i].appendChild(p);
 
     slots.appendChild(element);
-    value = document.getElementById("value");
+    value_array = document.getElementById("value_array");
     randomNumber = getRandomInt(1, 500);
-    if (value.value == "") {
-        value.value = randomNumber;
+    if (value_array.value == "") {
+        value_array.value = randomNumber;
     }
     var p = document.createElement('p');
     p.classList.add("pera");
-    p.innerHTML = value.value;
+    p.innerHTML = value_array.value;
     p.style.padding = "auto";
 
     update_slots_position(1);
     element.appendChild(p);
     element.addEventListener("mousedown", dragMouseMove);
+
+    var array_string = "[";
+    for (let i = 0; i < array_size; i++) {
+        if (i + 1 != array_size)
+            array_string += array[i] + ", ";
+        else
+            array_string += array[i]
+    }
+    array_string += "]";
+    var python_code =
+        `array = ${array_string}
+
+print(array) # print array
+`
+    codeOutput(python_code);
 }
 
 function getRandomInt(min, max) {
@@ -107,8 +137,6 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-let randomNumber = getRandomInt(1, 10);
 
 function update_slots_position(t) {
     slots = document.querySelector(".slots");
@@ -160,18 +188,40 @@ function transformScaleSlot(index) {
         }
     }
 }
-var sloted = new Set();
+
+
+function codeOutput(python_code) {
+    const add_code = document.querySelector("#add_code");
+    add_code.innerHTML = python_code;
+    hljs.initHighlightingOnLoad();
+    var copy_btn = document.querySelector("#copy_btn");
+    copy_btn.style.display = "block";
+    copy_btn.addEventListener("click", function() {
+        const textarea = document.createElement("textarea");
+        textarea.value = python_code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    });
+
+}
 
 function slotsColorChange() {
     if (element == null) {
         return;
     }
-    var xs, ys, index, flag;
+    var xs, ys, index, array_string = "[";
     const newArray = new Array();
     for (let i = 0; i < array_size; i++) {
         newArray.push(array[i]);
+        if (i + 1 != array_size)
+            array_string += array[i] + ", ";
+        else
+            array_string += array[i]
     }
-    const output = document.querySelector(".output_code_array");
+    array_string += "]";
+
     for (let i = 0; i < array_size + 1; i++) {
         xs = slots_arrayPos[i].left - slots_pos.left;
         ys = slots_arrayPos[i].top - slots_pos.top;
@@ -181,21 +231,44 @@ function slotsColorChange() {
         } else if (array_size <= i) {
             slots_arrayClass[i].style.color = "black";
             slots_arrayClass[i].style.backgroundColor = "black";
-            output.innerHTML = "";
+            var python_code =
+                `array = ${array_string}
+
+print(array) # print array
+`
+            codeOutput(python_code);
         }
     }
     if (array_size <= index) {
         var text = slots_arrayClass[index].querySelector(".value");
-        slots_arrayClass[index].style.color = "rgb(255 129 0)";
+        slots_arrayClass[index].style.color = "rgb(179, 255, 0)";
         slots_arrayClass[index].style.backgroundColor = "rgb(255 129 0)";
-        output.innerHTML = "array.append(" + value.value + ")";
-        text.textContent = value.value;
+        var python_code =
+            `array = ${array_string}
+
+def function(value):
+    array.append(value) # add method
+    return array # return array
+        
+print(function(${value_array.value})) # print array
+`
+        codeOutput(python_code);
+        text.textContent = value_array.value;
         text.style.color = "black";
     } else if (array_size > index) {
         slots_arrayClass[array_size].style.color = "black";
         slots_arrayClass[array_size].style.backgroundColor = "black";
-        output.innerHTML = "array.insert(" + index + ", " + value.value + ")";
-        newArray.splice(index, 0, value.value);
+        var python_code =
+            `array = ${array_string}
+            
+def function(index, value):
+    array.insert(index, value) # insertion method
+    return array # return array
+
+print(function(${index}, ${value_array.value})) # print array
+`
+        codeOutput(python_code);
+        newArray.splice(index, 0, value_array.value);
     }
     arrayContainerUpdate(newArray);
     transformScaleSlot(index);
@@ -222,7 +295,7 @@ function slotsSetOnChange() {
             for (let i = 0; i < array_size; i++) {
                 newArray.push(array[i]);
             }
-            newArray.splice(i, 0, value.value);
+            newArray.splice(i, 0, value_array.value);
 
             array_size += 1;
             for (let i = 0; i < array_size; i++) {
@@ -230,7 +303,7 @@ function slotsSetOnChange() {
             }
             arrayContainerUpdate(array);
             transformScaleSlot(array_size + 1);
-            value.value = "";
+            value_array.value = "";
             if (array.length < 15)
                 div_create.style.display = "block";
             break;
@@ -270,8 +343,7 @@ function closeMouseElement() {
     const box_pos = box_.getBoundingClientRect();
     const x_max_min_move = container_array_pos.left < Math.ceil(box_pos.left) && Math.ceil(box_pos.left) < ((container_array_pos.width + container_array_pos.left) - 45);
     const y_max_min_move = container_array_pos.top < Math.ceil(box_pos.top) && Math.ceil(box_pos.top) < ((container_array_pos.height + container_array_pos.top) - 45);
-    if (!(x_max_min_move && y_max_min_move)) {
-        console.log(x_max_min_move, y_max_min_move);
+    if (!(x_max_min_move && y_max_min_move) && box_) {
         element.style.top = "125px";
         element.style.left = "377.5px";
     }

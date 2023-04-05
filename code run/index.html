@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    <style>
+        #copy_btn {
+            position: absolute;
+            top: 50px;
+            right: 14px;
+        }
+        
+        pre {
+            background-color: rgb(85, 85, 85);
+        }
+    </style>
+</head>
+
+<body>
+
+    <pre>
+        <button id="copy_btn">copy</button>
+        <code class="language-python" id="add_code">
+        </code>
+    </pre>
+    <script>
+        // hljs.initHighlightingOnLoad();
+        const add_code = document.querySelector("#add_code");
+        const x = 5,
+            y = 6;
+        const python_code =
+            `def function():
+    print("Hello")
+print(function())
+        `
+        add_code.innerHTML = python_code;
+        hljs.initHighlightingOnLoad();
+
+        const copy_btn = document.querySelector("#copy_btn");
+        copy_btn.addEventListener("click", function() {
+            const textarea = document.createElement("textarea");
+            textarea.value = python_code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+        });
+    </script>
+</body>
+
+</html>
