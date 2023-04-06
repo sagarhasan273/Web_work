@@ -213,7 +213,6 @@
     position: relative;
     float: left;
     width: 48%;
-    /* background-color: rgb(231, 206, 172); */
     height: 40vh;
     margin: auto;
     padding: 10px;
@@ -238,12 +237,23 @@
     width: 300px;
 }
 
+#create-list-array-button {
+    width: 32px;
+    position: relative;
+    top: 2px;
+    margin-left: 5px;
+}
+
+#create-list-array-button:hover {
+    cursor: pointer;
+}
+
 .third_key_slot_array {
     display: flex;
 }
 
 .second_key_slot_array {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     /* background-color: aqua; */
     justify-content: center;
@@ -311,13 +321,9 @@
 
 #copy_btn {
     position: absolute;
-    top: 55px;
+    top: 45px;
     right: 14px;
     display: none;
-}
-
-pre {
-    background-color: rgb(85, 85, 85);
 }
 
 #add_code {
