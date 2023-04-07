@@ -1,5 +1,6 @@
 #container_stack {
-    margin: 50px;
+    margin: auto;
+    width: 1000px;
 }
 
 .container_stack_list {
@@ -8,7 +9,7 @@
     height: 60px;
 }
 
-.stack_slots {
+.slots {
     position: relative;
     display: left;
     width: 50px;
@@ -26,12 +27,11 @@
 }
 
 #stack_label_list {
-    position: relative;
-    top: 20px;
-    /* left: 50%; */
-    font-size: 30px;
     display: flex;
     justify-content: center;
+    position: relative;
+    top: 20px;
+    font-size: 30px;
 }
 
 #stack_label {
