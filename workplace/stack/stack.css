@@ -1,5 +1,6 @@
 #container_stack {
     margin: 50px;
+    margin-left: 10%;
 }
 
 .container_stack_list {
@@ -16,6 +17,7 @@
     background-color: #ff5733;
     margin: 2px;
     margin-top: 20px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5), 0 10px 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 .index {
@@ -154,4 +156,43 @@
 .brick:nth-child(15) {
     transform: rotateX(0deg) translate3d(0, 160px, -20px);
     box-shadow: 3px 3px 3px rgba(119, 0, 0, 0.5);
+}
+
+.output_section_stack {
+    position: relative;
+    float: left;
+    width: 50%;
+    /* height: 50vh; */
+    /* background-color: aquamarine; */
+    margin: auto;
+    padding: 10px;
+    top: 200px;
+    left: 400px;
+}
+
+#copy_btn {
+    position: absolute;
+    top: 45px;
+    right: 14px;
+    display: none;
+    width: 90px;
+    height: 20px;
+    background-color: #d4d3d3;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#add_code {
+    font-size: 16px;
+}
+
+#delete_stack_box,
+#add_stack_box {
+    background-color: #ff5733;
+    border: 1px solid #b82200;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
 }
