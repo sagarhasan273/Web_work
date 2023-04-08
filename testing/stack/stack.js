@@ -45,6 +45,12 @@ fetch('./stack/stack.html')
             value.innerHTML = randomNumber;
             value.style.fontSize = "30px";
             document.querySelector("." + 'brick' + i).appendChild(value);
+            if (i == 0) {
+                var first = document.createElement('div');
+                first.classList.add('first');
+                first.innerHTML = "First";
+                document.querySelector("." + 'brick' + i).appendChild(first);
+            }
 
             var value = document.createElement('div');
             value.classList.add('value');
@@ -79,7 +85,7 @@ print(stack) # print stack
 `
             codeOutput(python_code);
 
-
+            add_last_brick();
             i += 1;
         });
 
@@ -91,6 +97,8 @@ print(stack) # print stack
             }
             var brick_delete = document.querySelector("." + 'brick' + i);
             container.removeChild(brick_delete);
+
+
 
             var stack_slots_delete = document.querySelector("." + 'stack_slots' + i);
             container_stack_list.removeChild(stack_slots_delete);
@@ -112,10 +120,25 @@ print(stack) # print stack
 `
             codeOutput(python_code);
             stack.pop();
+            add_last_brick();
         });
 
 
     });
+
+function add_last_brick() {
+    for (let i = 0; i < stack.length; i++) {
+        if (i == stack.length - 1 && i != 0) {
+            var last = document.createElement('div');
+            last.classList.add('last');
+            last.innerHTML = "Last & Top";
+            document.querySelector("." + 'brick' + i).appendChild(last);
+        } else
+        if (document.querySelector("." + 'last')) {
+            document.querySelector("." + 'last').remove();
+        }
+    }
+}
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

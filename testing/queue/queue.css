@@ -68,6 +68,20 @@
     transform: translate(-50%, -50%);
 }
 
+.first {
+    position: relative;
+    top: 50px;
+    left: 130px;
+    font-size: 20px;
+}
+
+.last {
+    position: relative;
+    top: 0px;
+    left: 130px;
+    font-size: 20px;
+}
+
 .brick-queue {
     perspective: 1500px;
 }

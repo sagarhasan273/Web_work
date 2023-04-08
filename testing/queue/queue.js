@@ -115,6 +115,17 @@ function setQueue_slots_and_brick() {
         value.innerHTML = queue[j];
         value.style.fontSize = "30px";
         document.querySelector("." + 'brick' + j).appendChild(value);
+        if (j == 0) {
+            var first = document.createElement('div');
+            first.classList.add('first');
+            first.innerHTML = "First";
+            document.querySelector("." + 'brick' + j).appendChild(first);
+        } else if (j == queue.length - 1) {
+            var last = document.createElement('div');
+            last.classList.add('last');
+            last.innerHTML = "Last";
+            document.querySelector("." + 'brick' + j).appendChild(last);
+        }
 
         var value = document.createElement('div');
         value.classList.add('value');
